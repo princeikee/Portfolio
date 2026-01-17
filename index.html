@@ -1,175 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prince - Computer Engineer & Full Stack Developer</title>
     <link rel="icon" type="image/x-icon" href="https://icons.getbootstrap.com/assets/icons/code-slash.svg">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Feather Icons -->
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.min.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        primary: '#6366f1',
-                        secondary: '#8b5cf6',
-                        dark: '#0f172a',
-                        light: '#f8fafc'
+                        primary: '#6366f1', // Indigo 500
+                        secondary: '#8b5cf6', // Violet 500
+                        accent: '#ec4899', // Pink 500
+                        dark: '#0f172a', // Slate 900
+                        darker: '#020617', // Slate 950
+                        light: '#f8fafc',
+                        surface: '#1e293b' // Slate 800
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         heading: ['Space Grotesk', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
                     }
                 }
             }
         }
     </script>
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .text-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-    </style>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-dark text-light font-sans">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-dark/90 backdrop-blur-md border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <a href="#" class="text-2xl font-heading font-bold text-gradient">Prince</a>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="hover:text-primary transition-colors">Home</a>
-                    <a href="#about" class="hover:text-primary transition-colors">About</a>
-                    <a href="#skills" class="hover:text-primary transition-colors">Skills</a>
-                    <a href="#projects" class="hover:text-primary transition-colors">Projects</a>
-                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
-                </div>
-                <div class="md:hidden">
-                    <button id="menu-btn" class="text-light">
-                        <i data-feather="menu"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-dark/95 backdrop-blur-lg border-t border-slate-800">
-            <div class="px-4 py-6 space-y-4">
-                <a href="#home" class="block py-2 hover:text-primary transition-colors">Home</a>
-                <a href="#about" class="block py-2 hover:text-primary transition-colors">About</a>
-                <a href="#skills" class="block py-2 hover:text-primary transition-colors">Skills</a>
-                <a href="#projects" class="block py-2 hover:text-primary transition-colors">Projects</a>
-                <a href="#contact" class="block py-2 hover:text-primary transition-colors">Contact</a>
-            </div>
-        </div>
-    </nav>
+<body class="bg-darker text-light font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Web Components -->
+    <custom-navbar></custom-navbar>
 
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-        <div class="absolute inset-0 gradient-bg opacity-10"></div>
-        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-secondary rounded-full filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
+        <!-- Background Effects -->
+        <div class="absolute inset-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-darker to-darker -z-10"></div>
+        <div class="absolute top-0 left-1/4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-72 h-72 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-1/3 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10" data-aos="fade-up">
-            <h1 class="text-5xl md:text-7xl font-heading font-bold mb-6">
-                Hi, I'm <span class="text-gradient">Prince</span>
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface/50 border border-primary/30 text-sm text-primary mb-6 backdrop-blur-sm">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                Available for opportunities
+            </div>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 tracking-tight">
+                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">Prince</span>
             </h1>
-            <p class="text-xl md:text-2xl text-slate-300 mb-8 max-w-3xl mx-auto">
-                Computer Engineer & Full Stack Developer crafting digital experiences that stand out
+            <p class="text-xl md:text-2xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+                Computer Engineer & Full Stack Developer blending hardware logic with software innovation.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#projects" class="px-8 py-3 bg-primary rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                <a href="#projects" class="group relative px-8 py-4 bg-primary rounded-lg font-bold text-white overflow-hidden transition-all hover:shadow-lg hover:shadow-primary/25">
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
                     View My Work
                 </a>
-                <a href="#contact" class="px-8 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/10 transition-colors">
+                <a href="#contact" class="px-8 py-4 border border-slate-600 bg-surface/50 text-slate-300 rounded-lg font-medium hover:bg-surface hover:text-white hover:border-secondary transition-all backdrop-blur-sm">
                     Get In Touch
                 </a>
             </div>
         </div>
         
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-            <div class="floating">
-                <i data-feather="chevron-down" class="w-8 h-8 text-slate-400"></i>
-            </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-slate-500 hover:text-primary transition-colors">
+                <i data-feather="chevron-down" class="w-8 h-8"></i>
+            </a>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-slate-900">
+    <section id="about" class="py-24 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">About Me</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-3xl md:text-5xl font-heading font-bold mb-4">About Me</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div data-aos="fade-right">
-                    <div class="relative">
-                        <div class="w-80 h-80 mx-auto bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-                            <div class="w-72 h-72 bg-dark rounded-full flex items-center justify-center">
-                                <i data-feather="code" class="w-32 h-32 text-primary"></i>
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative group" data-aos="fade-right">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-2xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500 opacity-20"></div>
+                    <div class="relative bg-surface rounded-2xl p-8 border border-slate-700/50 shadow-2xl">
+                        <img src="img/me.jpeg" alt="Prince" class="rounded-xl w-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="absolute -bottom-6 -right-6 bg-dark p-4 rounded-lg border border-slate-700 shadow-xl hidden md:block">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-primary/20 p-2 rounded-lg text-primary">
+                                    <i data-feather="award"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400">Experience</p>
+                                    <p class="font-bold">5+ Years</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-primary rounded-full opacity-50 animate-bounce"></div>
-                        <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-secondary rounded-full opacity-50 animate-bounce delay-1000"></div>
                     </div>
                 </div>
                 
                 <div data-aos="fade-left">
-                    <h3 class="text-2xl font-heading font-bold mb-6">Crafting Digital Excellence</h3>
-                    <p class="text-slate-300 mb-6">
-                        I'm an aspiring Computer Engineer and Full Stack Developer passionate about creating 
-                        innovative digital solutions. My journey combines a strong foundation in computer engineering 
-                        with modern web development skills, allowing me to approach problems from multiple perspectives.
+                    <h3 class="text-2xl md:text-3xl font-heading font-bold mb-6 text-white">Bridging Hardware & Software</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        I'm a Computer Engineer and Full Stack Developer passionate about creating innovative digital solutions. My journey combines a strong foundation in computer engineering with modern web development skills, allowing me to approach problems from multiple perspectives whether it's coding a backend API or soldering a microcontroller.
                     </p>
-                    <p class="text-slate-300 mb-8">
-                        I'm constantly learning and expanding my skillset, embracing new technologies and methodologies. 
-                        I believe in writing clean, efficient code and creating user experiences that are both functional 
-                        and delightful.
+                    <p class="text-slate-300 mb-8 leading-relaxed">
+                        I specialize in building scalable web applications and designing embedded systems that interact with the real world. I believe in writing clean, efficient code and creating user experiences that are both functional and delightful.
                     </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <i data-feather="code" class="w-5 h-5 text-primary mr-2"></i>
-                            <span>Full Stack Development</span>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-center p-3 rounded-lg hover:bg-surface/50 transition-colors">
+                            <i data-feather="code" class="w-5 h-5 text-primary mr-3"></i>
+                            <span>Full Stack Web Dev</span>
                         </div>
-                        <div class="flex items-center">
-                            <i data-feather="cpu" class="w-5 h-5 text-primary mr-2"></i>
-                            <span>Computer Engineering</span>
+                        <div class="flex items-center p-3 rounded-lg hover:bg-surface/50 transition-colors">
+                            <i data-feather="cpu" class="w-5 h-5 text-primary mr-3"></i>
+                            <span>Embedded Systems</span>
                         </div>
-                        <div class="flex items-center">
-                            <i data-feather="star" class="w-5 h-5 text-primary mr-2"></i>
-                            <span>Quick Learner</span>
+                        <div class="flex items-center p-3 rounded-lg hover:bg-surface/50 transition-colors">
+                            <i data-feather="database" class="w-5 h-5 text-primary mr-3"></i>
+                            <span>IoT Solutions</span>
                         </div>
-                        <div class="flex items-center">
-                            <i data-feather="zap" class="w-5 h-5 text-primary mr-2"></i>
-                            <span>Innovative Solutions</span>
+                        <div class="flex items-center p-3 rounded-lg hover:bg-surface/50 transition-colors">
+                            <i data-feather="layout" class="w-5 h-5 text-primary mr-3"></i>
+                            <span>UI/UX Design</span>
                         </div>
                     </div>
                 </div>
@@ -178,258 +167,390 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" class="py-20 bg-surface/30 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Technical Skills</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-3xl md:text-5xl font-heading font-bold mb-4">Technical Arsenal</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Skill Cards -->
-                <div class="bg-slate-900 rounded-xl p-6 card-hover" data-aos="flip-left">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-feather="code" class="w-8 h-8 text-primary"></i>
-                        </div>
-                        <h3 class="font-heading font-bold mb-3">Frontend</h3>
-                        <p class="text-slate-400 text-sm">React, Vue, HTML, CSS, Angular, TypeScript, TailwindCSS</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Skill Card 1 -->
+                <div class="bg-dark/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2" data-aos="flip-left">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 text-primary">
+                        <i data-feather="monitor" class="w-7 h-7"></i>
                     </div>
+                    <h3 class="font-heading font-bold text-xl mb-3">Frontend</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">React, Vue.js, HTML5, TailwindCSS, TypeScript, Angular</p>
                 </div>
 
-                <div class="bg-slate-900 rounded-xl p-6 card-hover" data-aos="flip-left" data-aos-delay="100">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-feather="server" class="w-8 h-8 text-primary"></i>
-                        </div>
-                        <h3 class="font-heading font-bold mb-3">Backend</h3>
-                        <p class="text-slate-400 text-sm">Node.js, Python, Java, PHP, REST APIs</p>
+                <!-- Skill Card 2 -->
+                <div class="bg-dark/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700 hover:border-secondary/50 transition-all duration-300 hover:-translate-y-2" data-aos="flip-left" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-4 text-secondary">
+                        <i data-feather="server" class="w-7 h-7"></i>
                     </div>
+                    <h3 class="font-heading font-bold text-xl mb-3">Backend</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Node.js, Express, Python, PHP, REST APIs</p>
                 </div>
 
-                <div class="bg-slate-900 rounded-xl p-6 card-hover" data-aos="flip-left" data-aos-delay="200">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-feather="database" class="w-8 h-8 text-primary"></i>
-                        </div>
-                        <h3 class="font-heading font-bold mb-3">Database</h3>
-                        <p class="text-slate-400 text-sm">MySQL, MongoDB, PostgreSQL, Redis</p>
+                <!-- Skill Card 3 -->
+                <div class="bg-dark/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700 hover:border-accent/50 transition-all duration-300 hover:-translate-y-2" data-aos="flip-left" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-4 text-accent">
+                        <i data-feather="cpu" class="w-7 h-7"></i>
                     </div>
+                    <h3 class="font-heading font-bold text-xl mb-3">Hardware/IoT</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Arduino, ESP32, C/C++, Embedded C, Circuit Design</p>
                 </div>
 
-                <div class="bg-slate-900 rounded-xl p-6 card-hover" data-aos="flip-left" data-aos-delay="300">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-feather="cloud" class="w-8 h-8 text-primary"></i>
-                        </div>
-                        <h3 class="font-heading font-bold mb-3">DevOps</h3>
-                        <p class="text-slate-400 text-sm">AWS, Docker, Kubernetes, CI/CD</p>
+                <!-- Skill Card 4 -->
+                <div class="bg-dark/50 backdrop-blur-md p-6 rounded-2xl border border-slate-700 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2" data-aos="flip-left" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 text-primary">
+                        <i data-feather="tool" class="w-7 h-7"></i>
                     </div>
+                    <h3 class="font-heading font-bold text-xl mb-3">Tools</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Git, AWS, Linux, Figma, Postman</p>
                 </div>
             </div>
         </div>
     </section>
 
+   <!-- Experience Section -->
+<section id="experience" class="py-24 relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-5xl font-heading font-bold mb-4">Professional Journey</h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+        </div>
+
+        <div class="relative space-y-12">
+            <!-- Vertical Line -->
+            <div class="absolute left-4 md:left-1/2 top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent"></div>
+
+            <!-- Experience 1 (LEFT) -->
+            <div class="relative flex flex-col md:flex-row items-center group" data-aos="fade-right">
+                <div class="md:w-1/2 md:pr-12 w-full pl-12 md:pl-0 mb-4 md:mb-0">
+                    <div class="bg-surface p-6 rounded-xl border border-slate-700 hover:border-primary/50 transition-all shadow-lg relative z-10">
+                        <div class="absolute -left-[41px] top-6 w-5 h-5 rounded-full bg-primary border-4 border-darker hidden md:block"></div>
+                        <span class="text-primary font-mono text-sm mb-2 block">March 2025 – Present</span>
+                        <h3 class="text-xl font-heading font-bold text-white">Web Developer</h3>
+                        <h4 class="text-lg text-slate-300 font-medium mb-4">Express Elevators</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm list-disc pl-4">
+                            <li>Designed, developed, and deployed a fully responsive corporate website, increasing online engagement by 30%.</li>
+                            <li>Implemented mobile-first design strategies to ensure seamless user experience across devices.</li>
+                            <li>Optimized website SEO, improving search engine visibility and driving targeted traffic.</li>
+                            <li>Collaborated with cross-functional teams to integrate dynamic content and enhance website functionality.</li>
+                        </ul>
+                        <div class="mt-4">
+                        <a
+                            href="https://www.expresselevator.com.ng" 
+                            target="_blank"
+                            class="inline-flex items-center text-sm font-semibold text-primary hover:text-secondary transition-colors"
+                        >
+                            View Site →
+                        </a>
+                        </div>
+                    </div>
+                </div> 
+                <div class="absolute left-4 top-6 w-4 h-4 rounded-full bg-primary border-4 border-darker md:hidden z-20"></div>
+                <div class="hidden md:block md:w-1/2"></div>
+            </div>
+
+            <!-- Experience 1.5 (RIGHT) -->
+            <div class="relative flex flex-col md:flex-row items-center group" data-aos="fade-left">
+                <div class="hidden md:block md:w-1/2"></div>
+                <div class="md:w-1/2 md:pl-12 w-full pl-12">
+                    <div class="bg-surface p-6 rounded-xl border border-slate-700 hover:border-primary/50 transition-all shadow-lg relative z-10">
+                        <div class="absolute -right-[41px] top-6 w-5 h-5 rounded-full bg-primary border-4 border-darker hidden md:block"></div>
+                        <span class="text-primary font-mono text-sm mb-2 block">2025</span>
+                        <h3 class="text-xl font-heading font-bold text-white">Web Developer (Contract)</h3>
+                        <h4 class="text-lg text-slate-300 font-medium mb-4">Bewell Urology Men’s Clinic</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm list-disc pl-4">
+                            <li>Designed and developed the official website <span class="text-slate-300">bewellurologymenclinic.org</span>.</li>
+                            <li>Implemented a clean, professional UI tailored for a medical clinic audience.</li>
+                            <li>Ensured responsive performance across desktop and mobile devices.</li>
+                            <li>Structured content for clarity, accessibility, and patient trust.</li>
+                        </ul>
+                            <div class="mt-4">
+                        <a
+                            href="https://www.bewellurologyandmensclinic.org/" 
+                            target="_blank"
+                            class="inline-flex items-center text-sm font-semibold text-primary hover:text-secondary transition-colors"
+                        >
+                            View Site →
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute left-4 top-6 w-4 h-4 rounded-full bg-primary border-4 border-darker md:hidden z-20"></div>
+            </div>
+
+            <!-- Experience 2 (LEFT) -->
+            <div class="relative flex flex-col md:flex-row items-center group" data-aos="fade-right">
+                <div class="md:w-1/2 md:pr-12 w-full pl-12 md:pl-0">
+                    <div class="bg-surface p-6 rounded-xl border border-slate-700 hover:border-secondary/50 transition-all shadow-lg relative z-10">
+                        <div class="absolute -left-[41px] top-6 w-5 h-5 rounded-full bg-secondary border-4 border-darker hidden md:block"></div>
+                        <span class="text-secondary font-mono text-sm mb-2 block">March 2024 – September 2024</span>
+                        <h3 class="text-xl font-heading font-bold text-white">Technical Intern</h3>
+                        <h4 class="text-lg text-slate-300 font-medium mb-4">National Information Technology Development Agency (NITDA)</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm list-disc pl-4">
+                            <li>Contributed to the development of Python-based web applications, embedded systems, and automation tools.</li>
+                            <li>Assisted in deploying solutions that enhanced operational efficiency and reduced process redundancies.</li>
+                            <li>Designed and implemented a smart water preservation system and a solar-powered energy conservation project.</li>
+                            <li>Conducted testing, troubleshooting, and documentation to ensure reliable system performance.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="absolute left-4 top-6 w-4 h-4 rounded-full bg-secondary border-4 border-darker md:hidden z-20"></div>
+                <div class="hidden md:block md:w-1/2"></div>
+            </div>
+
+            <!-- Experience 3 (RIGHT) -->
+            <div class="relative flex flex-col md:flex-row items-center group" data-aos="fade-left">
+                <div class="hidden md:block md:w-1/2"></div>
+                <div class="md:w-1/2 md:pl-12 w-full pl-12">
+                    <div class="bg-surface p-6 rounded-xl border border-slate-700 hover:border-accent/50 transition-all shadow-lg relative z-10">
+                        <div class="absolute -right-[41px] top-6 w-5 h-5 rounded-full bg-accent border-4 border-darker hidden md:block"></div>
+                        <span class="text-accent font-mono text-sm mb-2 block">May 2023 – September 2023</span>
+                        <h3 class="text-xl font-heading font-bold text-white">Technical Intern</h3>
+                        <h4 class="text-lg text-slate-300 font-medium mb-4">Federal Competition and Consumer Protection Commission (FCCPC)</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm list-disc pl-4">
+                            <li>Developed internal web tools to streamline workflows, reducing task completion time by 20%.</li>
+                            <li>Provided technical support, diagnosing and resolving recurring system issues to improve team productivity.</li>
+                            <li>Collaborated on data management and automation initiatives to optimize reporting and operational processes.</li>
+                            <li>Assisted in documenting system procedures and user guides for smoother onboarding of new team members.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="absolute left-4 top-6 w-4 h-4 rounded-full bg-accent border-4 border-darker md:hidden z-20"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    
     <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-slate-900">
+    <section id="projects" class="py-24 relative bg-surface/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Featured Projects</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-3xl md:text-5xl font-heading font-bold mb-4">Featured Projects</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project Cards -->
-                <div class="bg-dark rounded-xl overflow-hidden card-hover" data-aos="zoom-in">
-                    <div class="h-48 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                        <i data-feather="layout" class="w-16 h-16 text-white"></i>
+                
+                <!-- Project 1 -->
+                <div class="group bg-surface rounded-2xl overflow-hidden border border-slate-700 hover:border-primary transition-all duration-300 hover:-translate-y-2 shadow-lg" data-aos="zoom-in">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="img/solar.jpeg" alt="Solar Tracking" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-80"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading font-bold text-xl mb-2">Express Elevators website</h3>
-                        <p class="text-slate-400 mb-4">A responsive company website for Express Elevators</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">React</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">File handler.php</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">tailswind</span>
+                        <h3 class="font-heading font-bold text-xl mb-2 group-hover:text-primary transition-colors">Solar Tracking System</h3>
+                        <p class="text-slate-400 text-sm mb-4 line-clamp-3">Developed a solar energy system with real-time light-tracking functionality to maximize energy efficiency. Implemented sensors and control mechanisms that adjust panel orientation automatically.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">Arduino</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">Sensors</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">C++</span>
                         </div>
-                     <a href="https://expresselevator.com.ng" 
-                               target="_blank" 
-                                 class="text-primary hover:text-primary/80 flex items-center">
-                                    View Project 
-                      <i data-feather="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </a>
-
+                        <a href="https://github.com/princeikee/Solar-Tracking-System" target="_blank" class="inline-flex items-center text-sm font-semibold text-white group-hover:text-secondary transition-colors">
+                            View GitHub <i data-feather="github" class="w-4 h-4 ml-2"></i>
+                        </a>
                     </div>
                 </div>
 
-                <div class="bg-dark rounded-xl overflow-hidden card-hover" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="h-48 bg-gradient-to-br from-secondary to-purple-600 flex items-center justify-center">
-                        <i data-feather="smartphone" class="w-16 h-16 text-white"></i>
+                <!-- Project 2 -->
+                <div class="group bg-surface rounded-2xl overflow-hidden border border-slate-700 hover:border-secondary transition-all duration-300 hover:-translate-y-2 shadow-lg" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="img/water.jpeg" alt="Smart Water" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-80"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading font-bold text-xl mb-2">Real-time Chat App</h3>
-                        <p class="text-slate-400 mb-4">Currently exploring Node.js, Express, and Socket.io to build a real-time chat application</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">Vue.js</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">Socket.io</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">Express</span>
+                        <h3 class="font-heading font-bold text-xl mb-2 group-hover:text-secondary transition-colors">Automated Water Optimization Unit</h3>
+                        <p class="text-slate-400 text-sm mb-4 line-clamp-3">Designed and built a system to monitor and optimize water usage, reducing waste. Integrated sensors and automation to intelligently control water flow based on demand.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded">IoT</span>
+                            <span class="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded">Automation</span>
+                            <span class="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded">Circuit Design</span>
                         </div>
-                        
+                        <a href="https://github.com/princeikee/Automated-Water-Management-System" target="_blank" class="inline-flex items-center text-sm font-semibold text-white group-hover:text-secondary transition-colors">
+                            View GitHub <i data-feather="github" class="w-4 h-4 ml-2"></i>
+                        </a>
                     </div>
                 </div>
 
-                <div class="bg-dark rounded-xl overflow-hidden card-hover" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="h-48 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
-                        <i data-feather="bar-chart" class="w-16 h-16 text-white"></i>
+                <!-- Project 3 -->
+                <div class="group bg-surface rounded-2xl overflow-hidden border border-slate-700 hover:border-accent transition-all duration-300 hover:-translate-y-2 shadow-lg" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="img/robot.jpeg" alt="Robotic Car" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-80"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-heading font-bold text-xl mb-2">A Team Collaboration App</h3>
-                        <p class="text-slate-400 mb-4">Currently engaging in a real-time data visualization dashboard</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">Vue.js</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">D3.js</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">Express</span>
-                        </div>                    
-                    </div>                    
-                </div>
-
-                         <div class="bg-dark rounded-xl overflow-hidden card-hover" data-aos="zoom-in">
-                    <div class="h-48 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                        <i data-feather="layout" class="w-16 h-16 text-white"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-heading font-bold text-xl mb-2">Smart water dispenser</h3>
-                        <p class="text-slate-400 mb-4"> A responsive embedded system for conservation of water</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">Arduino</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">C++</span>
-                            <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">Debugging</span>
+                        <h3 class="font-heading font-bold text-xl mb-2 group-hover:text-accent transition-colors">Autonomous Obstacle Avoidance Robot</h3>
+                        <p class="text-slate-400 text-sm mb-4 line-clamp-3">Built a robotic vehicle capable of detecting and navigating around obstacles autonomously. Programmed sensor-based algorithms for real-time detection and route adjustment.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-accent/10 text-accent text-xs rounded">Robotics</span>
+                            <span class="px-2 py-1 bg-accent/10 text-accent text-xs rounded">Algorithms</span>
+                            <span class="px-2 py-1 bg-accent/10 text-accent text-xs rounded">Microcontrollers</span>
                         </div>
-                     <a href="https://github.com/princeiek12345-commits/Smart-water-Dispenser" 
-                               target="_blank" 
-                                 class="text-primary hover:text-primary/80 flex items-center">
-                                    View Project 
-                      <i data-feather="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </a>
-
+                         <a href="https://github.com/princeikee/Sensor-Based-Autonomous-Mobile-Robot" target="_blank" class="inline-flex items-center text-sm font-semibold text-white group-hover:text-secondary transition-colors">
+                            View GitHub <i data-feather="github" class="w-4 h-4 ml-2"></i>
+                        </a>
                     </div>
                 </div>
+
+                <!-- Project 4 -->
+                <div class="group bg-surface rounded-2xl overflow-hidden border border-slate-700 hover:border-primary transition-all duration-300 hover:-translate-y-2 shadow-lg" data-aos="zoom-in">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="w-full h-full bg-gradient-to-br from-indigo-900 to-slate-900 flex items-center justify-center">
+                            <i data-feather="layout" class="w-16 h-16 text-primary opacity-80"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl mb-2 group-hover:text-primary transition-colors">Express Elevators Corp</h3>
+                        <p class="text-slate-400 text-sm mb-4">A fully responsive corporate website designed and developed to enhance brand visibility and customer engagement.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">React</span>
+                            <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">Tailwind</span>
+                        </div>
+                        <a href="https://expresselevator.com.ng" target="_blank" class="inline-flex items-center text-sm font-semibold text-white group-hover:text-primary transition-colors">
+                            Visit Site <i data-feather="external-link" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="group bg-surface rounded-2xl overflow-hidden border border-slate-700 hover:border-secondary transition-all duration-300 hover:-translate-y-2 shadow-lg" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="w-full h-full bg-gradient-to-br from-purple-900 to-slate-900 flex items-center justify-center">
+                            <i data-feather="message-circle" class="w-16 h-16 text-secondary opacity-80"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl mb-2 group-hover:text-secondary transition-colors">Real-time Chat App</h3>
+                        <p class="text-slate-400 text-sm mb-4">A modern chat application utilizing WebSockets for instant messaging. Currently exploring advanced features.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded">Node.js</span>
+                            <span class="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded">Socket.io</span>
+                            <span class="px-2 py-1 bg-secondary/10 text-secondary text-xs rounded">Vue.js</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center text-sm font-semibold text-white group-hover:text-secondary transition-colors">
+                            Coming Soon <i data-feather="lock" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="group bg-surface rounded-2xl overflow-hidden border border-slate-700 hover:border-accent transition-all duration-300 hover:-translate-y-2 shadow-lg" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="w-full h-full bg-gradient-to-br from-pink-900 to-slate-900 flex items-center justify-center">
+                            <i data-feather="bar-chart-2" class="w-16 h-16 text-accent opacity-80"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading font-bold text-xl mb-2 group-hover:text-accent transition-colors">Collaboration Dashboard</h3>
+                        <p class="text-slate-400 text-sm mb-4">A data visualization dashboard for team collaboration metrics and performance tracking.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-2 py-1 bg-accent/10 text-accent text-xs rounded">Vue.js</span>
+                            <span class="px-2 py-1 bg-accent/10 text-accent text-xs rounded">D3.js</span>
+                            <span class="px-2 py-1 bg-accent/10 text-accent text-xs rounded">Express</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center text-sm font-semibold text-white group-hover:text-accent transition-colors">
+                            In Progress <i data-feather="tool" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Get In Touch</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-12">
+    <section id="contact" class="py-24 bg-surface/30 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16">
                 <div data-aos="fade-right">
-                    <h3 class="text-2xl font-heading font-bold mb-6">Let's Work Together</h3>
-                    <p class="text-slate-300 mb-8">
-                        I'm always interested in new opportunities and exciting projects. 
-                        Whether you have a question or just want to say hi, I'll get back to you as soon as possible!
+                    <h2 class="text-4xl font-heading font-bold mb-6">Let's Build Something <br><span class="text-primary">Amazing Together</span></h2>
+                    <p class="text-slate-300 mb-10 text-lg">
+                        Whether you have a project in mind, a question about my work, or just want to connect, my inbox is always open. I'll get back to you as soon as possible!
                     </p>
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <i data-feather="mail" class="w-5 h-5 text-primary mr-4"></i>
-                            <span>princeiek12345@gmail.com</span>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center group">
+                            <div class="w-12 h-12 bg-surface rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <i data-feather="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-slate-400">Email</p>
+                                <p class="text-lg font-medium">princeiek12345@gmail.com</p>
+                            </div>
                         </div>
-                        <div class="flex items-center">
-                            <i data-feather="phone" class="w-5 h-5 text-primary mr-4"></i>
-                            <span>+234 7025823790</span>
+                        <div class="flex items-center group">
+                            <div class="w-12 h-12 bg-surface rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <i data-feather="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-slate-400">Phone</p>
+                                <p class="text-lg font-medium">+234 7025823790</p>
+                            </div>
                         </div>
-                        <div class="flex items-center">
-                            <i data-feather="map-pin" class="w-5 h-5 text-primary mr-4"></i>
-                            <span>Abuja,Nigeria</span>
+                        <div class="flex items-center group">
+                            <div class="w-12 h-12 bg-surface rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <i data-feather="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-slate-400">Location</p>
+                                <p class="text-lg font-medium">Abuja, Nigeria</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex space-x-4 mt-8">
-                        <a href="https://github.com/princeiek12345-commits" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors">
+
+                    <div class="flex space-x-4 mt-10">
+                        <a href="https://github.com/princeikee" target="_blank" class="w-12 h-12 bg-surface rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-primary transition-all border border-slate-700">
                             <i data-feather="github" class="w-5 h-5"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/princewill-ikechukwu-30a91137a/" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors">
+                        <a href="https://www.linkedin.com/in/princewill-ikechukwu-30a91137a/" target="_blank" class="w-12 h-12 bg-surface rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#0077b5] transition-all border border-slate-700">
                             <i data-feather="linkedin" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>
 
                 <div data-aos="fade-left">
-                    <form action="https://formspree.io/f/xjkeozro" method="POST" class="space-y-6">
-    <div>
-        <label for="name" class="block text-sm font-medium mb-2">Name</label>
-        <input type="text" id="name" name="name" required
-            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary">
-    </div>
-    <div>
-        <label for="email" class="block text-sm font-medium mb-2">Email</label>
-        <input type="email" id="email" name="email" required
-            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary">
-    </div>
-    <div>
-        <label for="message" class="block text-sm font-medium mb-2">Message</label>
-        <textarea id="message" name="message" rows="4" required
-            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-    </div>
-    <button type="submit"
-        class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-        Send Message
-    </button>
-</form>
+                    <form action="https://formspree.io/f/xjkeozro" method="POST" class="bg-darker/50 backdrop-blur-sm p-8 rounded-2xl border border-slate-700 shadow-2xl">
+                        <h3 class="text-2xl font-heading font-bold mb-6">Send a Message</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-2 text-slate-400">Your Name</label>
+                                <input type="text" id="name" name="name" required
+                                    class="w-full bg-surface border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-slate-600">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2 text-slate-400">Your Email</label>
+                                <input type="email" id="email" name="email" required
+                                    class="w-full bg-surface border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-slate-600">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium mb-2 text-slate-400">Message</label>
+                                <textarea id="message" name="message" rows="4" required
+                                    class="w-full bg-surface border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-slate-600"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-lg font-bold hover:opacity-90 transition-opacity transform active:scale-95">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 py-8 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-slate-400">© 2024 Prince. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- Web Components -->
+    <custom-footer></custom-footer>
 
-    <script>
-        // Initialize animations
-        AOS.init({
-            duration: 1000,
-            once: true,
-            easing: 'ease-out-back'
-        });
-
-        // Mobile menu toggle
-        document.getElementById('menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                document.getElementById('mobile-menu').classList.add('hidden');
-            });
-        });
-
-        // Animate elements on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.card-hover').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Feather icons
-        feather.replace();
-    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="script.js"></script>
+    <script>feather.replace();</script>
 </body>
 </html>
