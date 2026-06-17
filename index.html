@@ -14,7 +14,8 @@
       align-items: center;
       justify-content: center;
       font-family: 'Segoe UI', system-ui, sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       color: #fff;
     }
 
@@ -235,6 +236,70 @@
     @keyframes fade-up {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Tablet ── */
+    @media (max-width: 900px) {
+      .scene { gap: 60px; padding: 32px; }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      body { align-items: flex-start; padding: 0; }
+
+      .scene {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        padding: 80px 24px 48px;
+        text-align: center;
+      }
+
+      .char-svg {
+        width: 130px;
+        height: 188px;
+      }
+
+      /* Bubble points down on mobile (character is above text) */
+      .bubble {
+        left: 50%;
+        transform: translateX(-50%);
+        top: auto;
+        bottom: -42px;
+        white-space: nowrap;
+      }
+
+      .bubble::before {
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-bottom-color: #fff;
+        border-right-color: transparent;
+      }
+
+      .character-wrap {
+        margin-bottom: 60px;
+      }
+
+      .content {
+        max-width: 100%;
+      }
+
+      .headline {
+        font-size: clamp(36px, 10vw, 48px);
+      }
+
+      .tag { margin-bottom: 20px; }
+
+      .redirect-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 24px;
+      }
+
+      .corner.tl { font-size: 10px; top: 16px; left: 16px; }
+      .corner.br { font-size: 10px; bottom: 16px; right: 16px; }
     }
   </style>
 </head>
