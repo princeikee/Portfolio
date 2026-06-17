@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Moved.</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* Grid lines background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Glow blob */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .scene {
+      display: flex;
+      align-items: center;
+      gap: 160px;
+      position: relative;
+      z-index: 1;
+      padding: 40px;
+    }
+
+    /* ── Character ── */
+    .character-wrap {
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+      animation: float 3.5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-16px); }
+    }
+
+    .character-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 16px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      filter: blur(4px);
+      animation: shadow-shrink 3.5s ease-in-out infinite;
+    }
+
+    @keyframes shadow-shrink {
+      0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 0.4; }
+      50%       { transform: translateX(-50%) scaleX(0.55); opacity: 0.15; }
+    }
+
+    .char-svg {
+      width: 180px;
+      height: 260px;
+      display: block;
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.12));
+      transition: filter 0.3s;
+    }
+
+    .character-wrap:hover .char-svg {
+      filter: drop-shadow(0 0 40px rgba(255,255,255,0.3));
+    }
+
+    /* eye blink */
+    .eye-l, .eye-r {
+      animation: blink 6s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    @keyframes blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      94%           { transform: scaleY(0.05); }
+    }
+
+    /* speech bubble */
+    .bubble {
+      position: absolute;
+      top: 0px;
+      left: 200px;
+      background: #fff;
+      color: #0a0a0a;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 8px 14px;
+      border-radius: 12px;
+      white-space: nowrap;
+      box-shadow: 0 4px 24px rgba(255,255,255,0.15);
+      animation: bubble-anim 6s ease-in-out infinite;
+    }
+
+    .bubble::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: -8px;
+      border: 6px solid transparent;
+      border-right-color: #fff;
+    }
+
+    @keyframes bubble-anim {
+      0%, 75%, 100% { opacity: 1; transform: scale(1); }
+      85%           { opacity: 0; transform: scale(0.9); }
+    }
+
+    /* ── Content ── */
+    .content {
+      max-width: 460px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #666;
+      border: 1px solid #333;
+      padding: 5px 14px;
+      border-radius: 4px;
+      margin-bottom: 28px;
+      animation: fade-up 0.6s ease both;
+    }
+
+    .headline {
+      font-size: clamp(42px, 5.5vw, 62px);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      animation: fade-up 0.7s ease 0.1s both;
+    }
+
+    .headline .accent {
+      color: #0a0a0a;
+      -webkit-text-stroke: 1.5px #fff;
+    }
+
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: #fff;
+      margin-bottom: 20px;
+      animation: expand 0.8s ease 0.2s both;
+    }
+
+    @keyframes expand {
+      from { width: 0; opacity: 0; }
+      to   { width: 48px; opacity: 1; }
+    }
+
+    .sub {
+      font-size: 15px;
+      color: #888;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fade-up 0.8s ease 0.3s both;
+    }
+
+    .redirect-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 30px;
+      background: #fff;
+      color: #0a0a0a;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(255,255,255,0);
+      animation: fade-up 0.9s ease 0.4s both;
+    }
+
+    .redirect-btn:hover {
+      background: #e5e5e5;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(255,255,255,0.2);
+    }
+
+    .redirect-btn .arrow {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .redirect-btn:hover .arrow { transform: translateX(5px); }
+
+    /* corner decoration */
+    .corner {
+      position: fixed;
+      font-size: 11px;
+      color: #333;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .corner.tl { top: 24px; left: 24px; }
+    .corner.br { bottom: 24px; right: 24px; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <span class="corner tl">Prince.dev</span>
+  <span class="corner br">© 2025</span>
+
+  <div class="scene">
+
+    <!-- Anime Boy Character -->
+    <a class="character-wrap" href="https://prince-dev-c40d.onrender.com/">
+      <div class="bubble">Heyy click me 🫠</div>
+
+      <svg class="char-svg" viewBox="0 0 180 260" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Shadow/base -->
+        <!-- Legs -->
+        <rect x="62" y="198" width="24" height="42" rx="8" fill="#1a1a1a"/>
+        <rect x="94" y="198" width="24" height="42" rx="8" fill="#111"/>
+        <!-- Shoes - chunky -->
+        <rect x="56" y="230" width="34" height="14" rx="6" fill="#222"/>
+        <rect x="90" y="230" width="34" height="14" rx="6" fill="#1a1a1a"/>
+        <rect x="56" y="238" width="34" height="6" rx="3" fill="#333"/>
+        <rect x="90" y="238" width="34" height="6" rx="3" fill="#2a2a2a"/>
+
+        <!-- Body - jacket -->
+        <rect x="36" y="130" width="108" height="76" rx="16" fill="#1c1c1c"/>
+        <!-- Jacket lapels -->
+        <path d="M80 132 L65 165 L80 158 Z" fill="#2a2a2a"/>
+        <path d="M100 132 L115 165 L100 158 Z" fill="#2a2a2a"/>
+        <!-- Collar / inner shirt -->
+        <rect x="72" y="130" width="36" height="30" rx="4" fill="#111"/>
+        <path d="M80 130 Q90 140 100 130" stroke="#333" stroke-width="1" fill="none"/>
+        <!-- Jacket buttons -->
+        <circle cx="90" cy="175" r="3" fill="#333"/>
+        <circle cx="90" cy="188" r="3" fill="#333"/>
+        <!-- Jacket pocket -->
+        <rect x="42" y="155" width="20" height="18" rx="4" fill="#242424" stroke="#333" stroke-width="1"/>
+
+        <!-- Arms -->
+        <rect x="14" y="133" width="26" height="60" rx="12" fill="#1c1c1c"/>
+        <rect x="140" y="133" width="26" height="60" rx="12" fill="#1c1c1c"/>
+        <!-- Shirt cuffs -->
+        <rect x="14" y="178" width="26" height="12" rx="6" fill="#2a2a2a"/>
+        <rect x="140" y="178" width="26" height="12" rx="6" fill="#2a2a2a"/>
+        <!-- Hands -->
+        <ellipse cx="27" cy="197" rx="13" ry="11" fill="#d4a98a"/>
+        <ellipse cx="153" cy="197" rx="13" ry="11" fill="#d4a98a"/>
+        <!-- Finger lines -->
+        <line x1="20" y1="193" x2="18" y2="202" stroke="#c4906a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="27" y1="191" x2="27" y2="202" stroke="#c4906a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="34" y1="193" x2="36" y2="202" stroke="#c4906a" stroke-width="1.5" stroke-linecap="round"/>
+
+        <!-- Neck -->
+        <rect x="76" y="115" width="28" height="22" rx="6" fill="#d4a98a"/>
+
+        <!-- Head -->
+        <ellipse cx="90" cy="80" rx="44" ry="44" fill="#d4a98a"/>
+
+        <!-- Hair - spiky cool style -->
+        <!-- Back hair -->
+        <ellipse cx="90" cy="68" rx="44" ry="38" fill="#111"/>
+        <!-- Spikes -->
+        <path d="M50 62 Q45 40 58 30 Q60 52 68 58Z" fill="#111"/>
+        <path d="M62 50 Q64 25 78 20 Q76 46 82 52Z" fill="#0d0d0d"/>
+        <path d="M85 46 Q90 18 100 18 Q96 44 98 50Z" fill="#111"/>
+        <path d="M102 50 Q110 28 122 32 Q114 50 112 56Z" fill="#0d0d0d"/>
+        <path d="M116 60 Q126 44 132 50 Q122 62 118 68Z" fill="#111"/>
+        <!-- Side hair -->
+        <path d="M48 70 Q40 85 44 105 Q50 90 54 78Z" fill="#111"/>
+        <path d="M132 70 Q140 85 136 105 Q130 90 126 78Z" fill="#111"/>
+
+        <!-- Face base (re-draw over hair for face area) -->
+        <ellipse cx="90" cy="86" rx="37" ry="36" fill="#d4a98a"/>
+
+        <!-- Ear -->
+        <ellipse cx="53" cy="88" rx="7" ry="9" fill="#c4906a"/>
+        <ellipse cx="127" cy="88" rx="7" ry="9" fill="#c4906a"/>
+
+        <!-- ─ Glasses ─ -->
+        <!-- Bridge -->
+        <line x1="72" y1="81" x2="108" y2="81" stroke="#111" stroke-width="2.5"/>
+        <!-- Left frame -->
+        <rect x="52" y="72" width="22" height="18" rx="5" fill="none" stroke="#111" stroke-width="2.5"/>
+        <!-- Right frame -->
+        <rect x="106" y="72" width="22" height="18" rx="5" fill="none" stroke="#111" stroke-width="2.5"/>
+        <!-- Lens tint -->
+        <rect x="52" y="72" width="22" height="18" rx="5" fill="rgba(0,0,0,0.08)"/>
+        <rect x="106" y="72" width="22" height="18" rx="5" fill="rgba(0,0,0,0.08)"/>
+        <!-- Temples -->
+        <line x1="52" y1="80" x2="46" y2="82" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="128" y1="80" x2="134" y2="82" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Glasses shine -->
+        <line x1="57" y1="76" x2="63" y2="76" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="111" y1="76" x2="117" y2="76" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+
+        <!-- Eyes (behind glasses) -->
+        <g class="eye-l" style="transform-origin:63px 82px">
+          <ellipse cx="63" cy="82" rx="6" ry="7" fill="#111"/>
+          <ellipse cx="63" cy="82" rx="3" ry="3.5" fill="#333"/>
+          <ellipse cx="65" cy="79" rx="1.5" ry="1.5" fill="#fff"/>
+        </g>
+        <g class="eye-r" style="transform-origin:117px 82px">
+          <ellipse cx="117" cy="82" rx="6" ry="7" fill="#111"/>
+          <ellipse cx="117" cy="82" rx="3" ry="3.5" fill="#333"/>
+          <ellipse cx="119" cy="79" rx="1.5" ry="1.5" fill="#fff"/>
+        </g>
+
+        <!-- Eyebrows - sharp & cool -->
+        <path d="M52 68 Q63 63 73 67" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M107 67 Q117 63 128 68" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+        <!-- Nose -->
+        <path d="M87 95 Q90 100 93 95" stroke="#c4906a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Mouth - slight smirk -->
+        <path d="M78 107 Q90 114 102 107" stroke="#a0705a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M96 107 Q101 105 104 108" stroke="#a0705a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Ear details -->
+        <path d="M55 85 Q57 88 55 93" stroke="#b47c5a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M125 85 Q123 88 125 93" stroke="#b47c5a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Cool earring on left -->
+        <circle cx="53" cy="98" r="2.5" fill="#bbb"/>
+        <line x1="53" y1="100" x2="53" y2="105" stroke="#bbb" stroke-width="1.5"/>
+        <circle cx="53" cy="106" r="2" fill="#888"/>
+
+      </svg>
+    </a>
+
+    <!-- Text Content -->
+    <div class="content">
+      <div class="tag">Site relocated</div>
+      <h1 class="headline">
+        I <span class="accent">moved.</span><br/>
+        New site.<br/>
+        Better vibes.
+      </h1>
+      <div class="divider"></div>
+      <p class="sub">
+        This page is collecting dust. The cool stuff projects, work, everything 
+        lives at my new site now. The guy with glasses agrees you should go there.
+      </p>
+      <a class="redirect-btn" href="https://prince-dev-c40d.onrender.com/">
+        Visit new site <span class="arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>
